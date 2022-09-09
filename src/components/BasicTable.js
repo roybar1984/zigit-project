@@ -11,6 +11,7 @@ export const BasicTable = (props) => {
     data: props.data,
   });
   console.log(props.data);
+  console.log(props.columns);
 
   const {
     getTableProps,

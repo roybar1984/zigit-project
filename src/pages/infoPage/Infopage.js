@@ -10,22 +10,19 @@ function Infopage() {
   const columns = useMemo(() => COLUMNS, []);
   const columnsPersonalDetails = useMemo(() => COLUMNS_PERSONAL_INFO, []);
 
-  // const storedDetails = "";
-
   useEffect(() => {
-    console.log(JSON.parse(localStorage.getItem("userInfo")));
+    //getting the value of local storage
     const storedToken = JSON.parse(localStorage.getItem("userInfo")).token;
-    const storedDetails = JSON.parse(localStorage.getItem("userInfo"))
-      .personalDetails;
-    userDetails[0] = { storedDetails };
-    setUsersDetails((current) => [userDetails[0], ...current]);
-    console.log(storedDetails);
-    console.log(userDetails);
 
+    userDetails[0] = JSON.parse(
+      localStorage.getItem("userInfo")
+    ).personalDetails;
+    setUsersDetails((current) => [userDetails[0], ...current]);
+
+    //fetching data
     const myHeaders = new Headers({
       Berear: { storedToken },
     });
-
     const fetchProjects = async (headers) => {
       const response = await fetch(
         "https://private-052d6-testapi4528.apiary-mock.com/info",
@@ -42,8 +39,8 @@ function Infopage() {
 
   return projectsData ? (
     <div className="tables-container">
-      <BasicTable data={projectsData} columns={columns} />
       <BasicTable data={userDetails} columns={columnsPersonalDetails} />
+      <BasicTable data={projectsData} columns={columns} />
     </div>
   ) : (
     <div>loading...</div>
