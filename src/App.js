@@ -2,7 +2,6 @@ import React from "react";
 import "./App.css";
 import LoginPage from "./pages/loginPage/LoginPage";
 import Infopage from "./pages/infoPage/Infopage";
-// import ReactDOM from "react-dom";
 import { Route, Routes } from "react-router-dom";
 
 function App() {

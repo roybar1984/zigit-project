@@ -3,15 +3,10 @@ import { useTable } from "react-table";
 import "./table.css";
 
 export const BasicTable = (props) => {
-  const FAIL_SCORE = 70;
-  const PASS_SCORE = 90;
-
   const tableInstance = useTable({
     columns: props.columns,
     data: props.data,
   });
-  console.log(props.data);
-  console.log(props.columns);
 
   const {
     getTableProps,
@@ -51,5 +46,3 @@ export const BasicTable = (props) => {
     </div>
   );
 };
-
-// export default BasicTable;

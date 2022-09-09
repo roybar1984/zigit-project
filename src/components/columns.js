@@ -11,18 +11,16 @@ export const COLUMNS = [
     Header: "Score",
     accessor: "score",
 
-    getProps: (state, rowInfo, column) => {
-      return {
-        style: {
-          color:
-            rowInfo.row.score <= 70
-              ? "red"
-              : rowInfo && rowInfo.row.score >= 90
-              ? "green"
-              : "",
-        },
-      };
-    },
+    getProps: (state, rowInfo, column) => ({
+      style: {
+        backgroundColor:
+          rowInfo.row.score <= 70
+            ? "red"
+            : rowInfo.row.score >= 90
+            ? "green"
+            : "",
+      },
+    }),
   },
   {
     Header: "DurationInDays",
