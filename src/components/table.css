@@ -1,7 +1,7 @@
 .table-container {
   overflow: auto;
   width: 80vw;
-  height: 80vh;
+  height: 60vh;
 }
 table {
   font-family: Arial, Helvetica, sans-serif;
@@ -11,6 +11,7 @@ table {
   border-spacing: 0;
   width: 100%;
   border: 1px solid #ddd;
+  margin-top: 4vh;
 }
 
 table td,

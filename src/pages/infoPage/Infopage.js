@@ -1,22 +1,24 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "./InfoPage.css";
 import { COLUMNS } from "../../components/columns";
-import { columnsPersonalDetails } from "../../components/columnsPersonalDetails";
+import { COLUMNS_PERSONAL_INFO } from "../../components/columnsPersonalDetails";
 import { BasicTable } from "../../components/BasicTable";
 
 function Infopage() {
   const [projectsData, setProjectsData] = useState();
-  const [userDetails, setUsersDetails] = useState({});
+  const [userDetails, setUsersDetails] = useState([]);
   const columns = useMemo(() => COLUMNS, []);
-  const columnsPersonalDetails = useMemo(() => columnsPersonalDetails, []);
+  const columnsPersonalDetails = useMemo(() => COLUMNS_PERSONAL_INFO, []);
 
   // const storedDetails = "";
 
   useEffect(() => {
+    console.log(JSON.parse(localStorage.getItem("userInfo")));
     const storedToken = JSON.parse(localStorage.getItem("userInfo")).token;
     const storedDetails = JSON.parse(localStorage.getItem("userInfo"))
       .personalDetails;
-    setUsersDetails(storedDetails);
+    userDetails[0] = { storedDetails };
+    setUsersDetails((current) => [userDetails[0], ...current]);
     console.log(storedDetails);
     console.log(userDetails);
 
@@ -39,12 +41,9 @@ function Infopage() {
   }, []);
 
   return projectsData ? (
-    <div>
+    <div className="tables-container">
       <BasicTable data={projectsData} columns={columns} />
-      {/* <BasicTable
-        data={userDetails}
-        columnsPersonalDetails={columnsPersonalDetails}
-      /> */}
+      <BasicTable data={userDetails} columns={columnsPersonalDetails} />
     </div>
   ) : (
     <div>loading...</div>

@@ -1,4 +1,4 @@
-export const columnsPersonalDetails = [
+export const COLUMNS_PERSONAL_INFO = [
   {
     Header: "Name",
     accessor: "name",

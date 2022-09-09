@@ -36,6 +36,12 @@ function LoginPage() {
 
   useEffect(() => {
     localStorage.setItem("userInfo", JSON.stringify(userinfo));
+
+    //navigate to info page when there is a value in the local storage
+
+    if (JSON.parse(localStorage.getItem("userInfo")) !== "") {
+      navigate("/info");
+    }
   }, [userinfo]);
 
   const handleClickLogin = (event) => {
@@ -62,33 +68,7 @@ function LoginPage() {
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);
-
         setUserInfo(data[0]);
-
-        localStorage.setItem("userInfo", JSON.stringify(userinfo));
-        if (JSON.parse(localStorage.getItem("userInfo")) !== "") {
-          navigate("/info");
-        }
-      });
-  };
-
-  const fetchUserInfo = (email, password) => {
-    setIsLoading(true);
-    const requestOptions = {
-      method: "POST",
-      headers: { accept: "application/json" },
-      body: JSON.stringify(email + password),
-    };
-
-    fetch(
-      "https://private-052d6-testapi4528.apiary-mock.com/authenticate",
-      requestOptions
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        setIsLoading(false);
-        setUserInfo(data[0]);
-        localStorage.setItem("userInfo", JSON.stringify(userinfo));
       });
   };
 
