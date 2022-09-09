@@ -1,17 +1,16 @@
-import React, { useMemo, useEffect } from "react";
+import React from "react";
 import { useTable } from "react-table";
-import { COLUMNS } from "./colomns";
-import MOCK_DATA from "./MOCK_DATA.json";
 import "./table.css";
 
 export const BasicTable = (props) => {
-  console.log(props.projectsData);
-  const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => MOCK_DATA, []);
+  const FAIL_SCORE = 70;
+  const PASS_SCORE = 90;
+
   const tableInstance = useTable({
-    columns,
-    data,
+    columns: props.columns,
+    data: props.data,
   });
+  console.log(props.data);
 
   const {
     getTableProps,

@@ -1,67 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import "./InfoPage.css";
+import { COLUMNS } from "../../components/columns";
+import { columnsPersonalDetails } from "../../components/columnsPersonalDetails";
 import { BasicTable } from "../../components/BasicTable";
 
 function Infopage() {
-  const [projectsData, setProjegctsData] = useState("");
+  const [projectsData, setProjectsData] = useState();
+  const [userDetails, setUsersDetails] = useState({});
+  const columns = useMemo(() => COLUMNS, []);
+  const columnsPersonalDetails = useMemo(() => columnsPersonalDetails, []);
+
+  // const storedDetails = "";
 
   useEffect(() => {
-    const storedToken = JSON.parse(localStorage.getItem("token"));
-    const storedDetails = JSON.parse(localStorage.getItem("details"));
-    console.log(storedToken);
-    console.log("stored-details" + storedDetails);
-    // setToken(JSON.stringify(storedToken));
-    // console.log(token);
-    // GET request using fetch with set headers
+    const storedToken = JSON.parse(localStorage.getItem("userInfo")).token;
+    const storedDetails = JSON.parse(localStorage.getItem("userInfo"))
+      .personalDetails;
+    setUsersDetails(storedDetails);
+    console.log(storedDetails);
+    console.log(userDetails);
+
     const myHeaders = new Headers({
       Berear: { storedToken },
     });
 
-    const request = async () => {
+    const fetchProjects = async (headers) => {
       const response = await fetch(
-        "https://private-052d6-testapi4528.apiary-mock.com/info"
+        "https://private-052d6-testapi4528.apiary-mock.com/info",
+        {
+          headers,
+        }
       );
-      const json = await response.json();
-      console.log(json);
-      setProjegctsData(json);
-      console.log(projectsData);
+
+      const projects = await response.json();
+      setProjectsData(projects);
     };
-
-    request();
-
-    // fetch("https://private-052d6-testapi4528.apiary-mock.com/info", {
-    //   myHeaders,
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     setProjegctsData(data);
-    //     console.log(projectsData);
-    //   });
-    // console.log(data));
-    // this.setState({ totalReactPackages: data.total }));
+    fetchProjects(myHeaders);
   }, []);
 
-  // React.useEffect(function effectFunction() {
-  //   async function fetchBooks() {
-  //     const response = await fetch(
-  //       "https://private-052d6-testapi4528.apiary-mock.com/info"
-  //     );
-  //     const json = await response.json();
-  //     setProjegctsData(json.data);
-  //   }
-  //   fetchBooks();
-  // }, []);
-
-  useEffect(() => {
-    setProjegctsData(projectsData);
-    console.log(projectsData);
-  }, [projectsData]);
-
-  return (
+  return projectsData ? (
     <div>
-      {/* <p>ff</p> */}
-      <BasicTable projectsData={projectsData} />
+      <BasicTable data={projectsData} columns={columns} />
+      {/* <BasicTable
+        data={userDetails}
+        columnsPersonalDetails={columnsPersonalDetails}
+      /> */}
     </div>
+  ) : (
+    <div>loading...</div>
   );
 }
 

@@ -2,15 +2,12 @@ import React, { useEffect, useState, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import InputField from "../../components/inputField/InputField";
-import Infopage from "../infoPage/Infopage";
 
 function LoginPage() {
   const navigate = useNavigate();
 
-  // const [apiToken, setApiToken] = useState("");
-  // const [personalDetails, setPersonalDetailes] = useState("");
   const [userinfo, setUserInfo] = useState("");
-  // const [info, setInfo] = useState({});
+
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(null);
   const [isErrorPassword, setIsErrorPassword] = useState(null);
@@ -39,7 +36,6 @@ function LoginPage() {
 
   useEffect(() => {
     localStorage.setItem("userInfo", JSON.stringify(userinfo));
-    // localStorage.setItem("details", JSON.stringify(personalDetails));
   }, [userinfo]);
 
   const handleClickLogin = (event) => {
@@ -74,19 +70,7 @@ function LoginPage() {
           navigate("/info");
         }
       });
-
-    // if (localStorage.getItem("token") !== "") {
-    //   console.log(localStorage.getItem("token"));
-    //   navigate("/info");
-    // }
-    // console.log(apiToke  n);
   };
-
-  // const storeInfo = (userInfo) => {
-  //   //save the token in local storage to keep it when the page refreshes
-  //   localStorage.setItem("userInfo", JSON.stringify(userInfo[0]));
-  //   // localStorage.setItem("details", JSON.stringify(personalDetails));
-  // };
 
   const fetchUserInfo = (email, password) => {
     setIsLoading(true);
@@ -103,37 +87,9 @@ function LoginPage() {
       .then((response) => response.json())
       .then((data) => {
         setIsLoading(false);
-        // setApiToken(data[0].token);
-        // setPersonalDetailes(data[0].personalDetails);
         setUserInfo(data[0]);
-        // localStorage.setItem("token", JSON.stringify(apiToken));
-        // localStorage.setItem("details", JSON.stringify(personalDetails));
         localStorage.setItem("userInfo", JSON.stringify(userinfo));
       });
-
-    // setIsLoading(false);
-    // export default await response;
-    // return response;
-    // const request = async () => {
-    //   const response = await fetch(
-    //     "https://private-052d6-testapi4528.apiary-mock.com/authenticate",
-    //     requestOptions
-    //   );
-    //   const json = await response.json();
-    //   console.log(json);
-    //   setIsLoading(false);
-    //   return json;
-    //   // setApiToken(json[0].token);
-    //   // setPersonalDetailes(json[0].personalDetails);
-    //   // setUserInfo(json[0]);
-    // };
-
-    // //save the token in local storage to keep it when the page refreshes
-    // localStorage.setItem("token", JSON.stringify(apiToken));
-    // localStorage.setItem("details", JSON.stringify(personalDetails));
-    // if (JSON.parse(localStorage.getItem("userInfo")) !== "") {
-    //   navigate("/info");
-    // }
   };
 
   return (
